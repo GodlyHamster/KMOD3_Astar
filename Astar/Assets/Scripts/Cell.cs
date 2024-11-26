@@ -45,6 +45,30 @@ public class Cell
         }
         return result;
     }
+
+    public List<Cell> GetAvailableNeighbours(Cell[,] grid)
+    {
+        List<Cell> result = new List<Cell>();
+        for (int x = -1; x < 2; x++)
+        {
+            for (int y = -1; y < 2; y++)
+            {
+                int cellX = this.gridPosition.x + x;
+                int cellY = this.gridPosition.y + y;
+                if (cellX < 0 || cellX >= grid.GetLength(0) || cellY < 0 || cellY >= grid.GetLength(1) || Mathf.Abs(x) == Mathf.Abs(y))
+                {
+                    continue;
+                }
+                if (x == 1 && this.HasWall(Wall.RIGHT) || x == -1 && this.HasWall(Wall.LEFT) || y == 1 && this.HasWall(Wall.UP) || y == -1 && this.HasWall(Wall.DOWN))
+                {
+                    continue;
+                }
+                Cell canditateCell = grid[cellX, cellY];
+                result.Add(canditateCell);
+            }
+        }
+        return result;
+    }
 }
 
 [System.Flags]
